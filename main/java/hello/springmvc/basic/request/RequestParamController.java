@@ -1,12 +1,10 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,6 +88,44 @@ public class RequestParamController {
         log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
         return "ok";
     }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v0")
+    public String modelAttribute(@RequestParam String username, @RequestParam int age){
+        HelloData helloData = new HelloData();
+        helloData.setUsername(username);
+        helloData.setAge(age);
+
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData={}", helloData); //helloData.toString 으로 자동출력된다.
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1") //RequestParam 생략가능!
+                                            //데이터 타입이 맞지 않을경우 BindException 이 발생한다.
+    public String modelAttributeV1(@ModelAttribute HelloData helloData){
+
+
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData={}", helloData); //helloData.toString 으로 자동출력된다.
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2") //RequestParam 생략가능!
+                                            //데이터 타입이 맞지 않을경우 BindException 이 발생한다.
+                                            //@ModelAttribute 도 생략이 가능하다.
+                                            //String, int, Integer 같은 단순 타입은 RequestParam
+                                            //나머지는 modelAttribute 이며 argument resolver 지정해둔 타입외
+    public String modelAttributeV2(HelloData helloData){
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData={}", helloData); //helloData.toString 으로 자동출력된다.
+        return "ok";
+    }
+
+
+
 
 
 }

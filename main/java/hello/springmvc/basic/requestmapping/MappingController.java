@@ -17,7 +17,7 @@ public class MappingController {
         return "basic";
     }
 
-    @GetMapping(value = "mapping-get-v2")
+    @GetMapping(value = "/mapping-get-v2")
     public String helloGet() {
         log.info("hellobasic");
         return "basic";
@@ -31,7 +31,7 @@ public class MappingController {
      * @PathVariable("userId") String userId -> @PathVariable userId
      * /mapping/userA
      */
-    @GetMapping(value = "mapping/{userId}")
+    @GetMapping(value = "/mapping/{userId}")
     public String mappingPath(@PathVariable("userId") String userId) {
         log.info("mappingPath userId = {}", userId);
         return "ok";
