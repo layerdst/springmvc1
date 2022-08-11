@@ -66,7 +66,7 @@ public class RequestBodyStringController {
 
     @ResponseBody
     @PostMapping("/request-body-string-v4")
-    public String requestBodyStringV4(@RequestBody String messageBody) throws IOException {\
+    public String requestBodyStringV4(@RequestBody String messageBody) throws IOException {
         log.info("messageBody={}", messageBody);
         return "ok";
     }
